@@ -168,7 +168,7 @@ Faulty files:
         assert len(stack) == 1
     ```
 
-#### <b> Solution: </b> The minimal solution I could offer to solve these issues was to detect the files causing errors and skip truncating it for the next phase of the process
+#### <b> Solution: </b> The minimal solution I could offer to solve these issues was to detect the files causing errors and skip truncating it for the next phase of the process. After 
 
 1) arch/alpha/kernel/ptrace.c caused error afterwards:
     stderr: "b"patch: **** Can't rename file arch/alpha/kernel/ptrace.c.ohBGgHS to arch/alpha/kernel/ptrace.c : Too many open files\n"". in folder: error2
