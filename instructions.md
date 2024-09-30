@@ -168,8 +168,18 @@ Faulty files:
         assert len(stack) == 1
     ```
 
-#### <b> Solution: </b> The minimal solution I could offer to solve these issues was to detect the files causing errors and skip truncating it for the next phase of the process. After 
+#### <b> Solution: </b> The minimal solution I could offer to solve these issues was to detect the files causing errors and skip truncating it for the next phase of the process. 
+#### <b> Note: </b> Because all the files were experiencing issues in the method, to make faulty file detection faster by avoiding repetition, when I find the faulty file, the next time I just considered the files after the specific faulty file. To do this, I wrote a bash script that takes a specific line in the specified .diff file and remove all the previous lines before that:
+```bash
+FILE="$1"
+LINE_NUMBER="$2"
 
+# Validation stuff...
+
+# Extract lines starting from the next line after the specified line number and overwrite the file
+tail -n +"$((LINE_NUMBER + 1))" "$FILE" > temp_file && mv temp_file "$FILE"
+```
+#### 
 1) arch/alpha/kernel/ptrace.c caused error afterwards:
     stderr: "b"patch: **** Can't rename file arch/alpha/kernel/ptrace.c.ohBGgHS to arch/alpha/kernel/ptrace.c : Too many open files\n"". in folder: error2
     
