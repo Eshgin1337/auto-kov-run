@@ -5,11 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
-
-# Unnecessary files:
 *.diff
 *.diff.covreq
 linux-6.10.tar.xz
+logfiles
 
 # Distribution / packaging
 .Python

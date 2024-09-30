@@ -79,7 +79,6 @@ koverage -f --linux-ksrc /home/eshgin/koverage_task/linux --config /home/eshgin/
 ```
 
 These files are:
-Faulty files:
 1) The first faulty file was: `arch/powerpc/platforms/powermac/udbg_adb.c`.
     The error it caused:
     ```
