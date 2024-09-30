@@ -5,10 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
+*.tar.xz
 *.diff
-*.diff.covreq
-linux-6.10.tar.xz
-logfiles
+latest_backup/
+
 
 # Distribution / packaging
 .Python
