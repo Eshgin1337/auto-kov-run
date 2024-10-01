@@ -5,3 +5,4 @@ latest_backup/
 copy_fw.diff
 linux-6.10.tar.xz
 all_diff_patch.diff
+*.log
