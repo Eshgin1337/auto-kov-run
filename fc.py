@@ -14,3 +14,4 @@ source_file_count = len(data.get("sourcefile_loc", {}))
 total_files = header_file_count + source_file_count
 
 print(total_files)
+

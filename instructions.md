@@ -1,5 +1,5 @@
-# Steps to achieve the task:
-
+# Steps to give the entire patch as an input to koverage: 
+#### <i>(I did all the experiments on Turing server, tried to replicate the same on my Ubuntu machine)</i>
 ## Step 1: download a clean Linux source tree
 ```bash
 wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.10.tar.xz
@@ -56,6 +56,12 @@ diff -ruN linux/ copied_linux/ | sed 's|^diff -ruN linux/|diff -ruN |; s| copied
 ```
 
 ## Step 6: Input the file "all_diff_patch.diff" to the koverage tool
+#### I used default configuration. To generate `.config` file, inside the linux directory, I run the command below:
+```bash
+make defconfig
+```
+
+#### <b>Note: </b> It is highly recommended to give absolute paths as inputs, otherwise the validators may not recongnize the files or folders
 ```bash
 koverage -f --linux-ksrc /home/eshgin/koverage_task/linux --config /home/eshgin/koverage_task/linux/.config --arch x86_64 --check-patch all_diff_patch.diff -o coverage_results_all_task.json 2>&1 | tee mylogs.logs
 ```
@@ -94,63 +100,7 @@ These files are:
         assert len(stack) == 1
     AssertionError
     ```
-2) The second faulty file was: `drivers/media/pci/cx23885/netup-eeprom.c`.
-    The error it caused:
-    ```
-    The source file is (koverage): drivers/media/pci/cx23885/netup-eeprom.c
-    Traceback (most recent call last):
-      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
-        main()
-      File "/home/eshgin/.local/bin/koverage", line 1056, in main
-        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
-      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
-        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
-      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 702, in get_conditional_blocks
-        next_token_to_type = categorized_tokens[linenum][i + 1]
-    ```
-3) The third faulty file was: `drivers/net/can/mscan/mscan.c` 
-    ```
-    The source file is (koverage): drivers/net/can/mscan/mscan.c
-    Traceback (most recent call last):
-      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
-        main()
-      File "/home/eshgin/.local/bin/koverage", line 1056, in main
-        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
-      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
-        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
-      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 702, in get_conditional_blocks
-        next_token_to_type = categorized_tokens[linenum][i + 1]
-    IndexError: list index out of range
-    ```
-4) The fourth faulty file was: `drivers/net/ethernet/i825xx/sun3_82586.c`. The error it caused:
-    ```
-    The source file is (koverage): drivers/net/ethernet/i825xx/sun3_82586.
-    Traceback (most recent call last):
-      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
-        main()
-      File "/home/eshgin/.local/bin/koverage", line 1056, in main
-        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
-      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
-        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
-      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 715, in get_conditional_blocks
-        stack[-1].sub_block_groups.append([new_cb])
-    IndexError: list index out of range
-    ```
-5) The fifth faulty file was: `init/main.c` The error it caused:
-    ```
-    The source file is (koverage): init/main.c
-    Traceback (most recent call last):
-      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
-        main()
-      File "/home/eshgin/.local/bin/koverage", line 1056, in main
-        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
-      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
-        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
-      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 739, in get_conditional_blocks
-        assert len(stack) == 1
-    AssertionError
-    ```
-6) The sixty faulty file was: `drivers/gpu/drm/omapdrm/omap_dmm_tiler.c` 
+2) The sixty faulty file was: `drivers/gpu/drm/omapdrm/omap_dmm_tiler.c` 
     The error it caused:
     ```
     The source file is (koverage): drivers/gpu/drm/omapdrm/omap_dmm_tiler.c
@@ -166,6 +116,63 @@ These files are:
       File "/home/eshgin/.local/share/pipx/venvs/kmax/lib/python3.12/site-packages/kmax/superc.py", line 737, in get_conditional_blocks
         assert len(stack) == 1
     ```
+3) The second faulty file was: `drivers/media/pci/cx23885/netup-eeprom.c`.
+    The error it caused:
+    ```
+    The source file is (koverage): drivers/media/pci/cx23885/netup-eeprom.c
+    Traceback (most recent call last):
+      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
+        main()
+      File "/home/eshgin/.local/bin/koverage", line 1056, in main
+        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
+      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
+        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
+      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 702, in get_conditional_blocks
+        next_token_to_type = categorized_tokens[linenum][i + 1]
+    ```
+4) The third faulty file was: `drivers/net/can/mscan/mscan.c` 
+    ```
+    The source file is (koverage): drivers/net/can/mscan/mscan.c
+    Traceback (most recent call last):
+      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
+        main()
+      File "/home/eshgin/.local/bin/koverage", line 1056, in main
+        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
+      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
+        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
+      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 702, in get_conditional_blocks
+        next_token_to_type = categorized_tokens[linenum][i + 1]
+    IndexError: list index out of range
+    ```
+5) The fourth faulty file was: `drivers/net/ethernet/i825xx/sun3_82586.c`. The error it caused:
+    ```
+    The source file is (koverage): drivers/net/ethernet/i825xx/sun3_82586.
+    Traceback (most recent call last):
+      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
+        main()
+      File "/home/eshgin/.local/bin/koverage", line 1056, in main
+        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
+      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
+        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
+      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 715, in get_conditional_blocks
+        stack[-1].sub_block_groups.append([new_cb])
+    IndexError: list index out of range
+    ```
+6) The fifth faulty file was: `init/main.c` The error it caused:
+    ```
+    The source file is (koverage): init/main.c
+    Traceback (most recent call last):
+      File "/home/eshgin/.local/bin/koverage", line 1120, in <module>
+        main()
+      File "/home/eshgin/.local/bin/koverage", line 1056, in main
+        validation_covreq, validation_patch = get_validation_covreq(covreq, linux_ksrc)
+      File "/home/eshgin/.local/bin/koverage", line 637, in get_validation_covreq
+        cb = SyntaxAnalysis.get_conditional_blocks(content, line_count)
+      File "/home/eshgin/.local/pipx/venvs/kmax/lib/python3.8/site-packages/kmax/superc.py", line 739, in get_conditional_blocks
+        assert len(stack) == 1
+    AssertionError
+    ```
+
 
 #### <b> Solution: </b> The minimal solution I could offer to solve these issues was to detect the files causing errors and skip truncating it for the next phase of the process. 
 #### <b> Note: </b> Because all the files were experiencing issues in the method, to make faulty file detection faster by avoiding repetition, when I find the faulty file, the next time I just considered the files after the specific faulty file. To do this, I wrote a bash script that takes a specific line in the specified .diff file and remove all the previous lines before that:
@@ -178,20 +185,53 @@ LINE_NUMBER="$2"
 # Extract lines starting from the next line after the specified line number and overwrite the file
 tail -n +"$((LINE_NUMBER + 1))" "$FILE" > temp_file && mv temp_file "$FILE"
 ```
-#### 
+#### <b> Result: </b> Once the the last file was skipped and the ones prior to it removed, there did not happen any issues and the program output the supposed `coverage_results_all_task.json` file which contained 4669 files (28019 lines in total) in total after `linux/init/main.c`. Then I tried the entire patch excluding the six faulty files, and although Turing server worked extremely slowly and took more than a day to run the command, again the program succeeded and this time `fw_coverage_results_all_task.json` file was output containing 31032 files (total 186197 lines). (In the `fw_all_diff_patch.diff `file there were total 31065 files in total)
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## Because the time the Turing server took to run the command, I tried to replicate the experiment on my own Ubuntu machine (24.04) and faced the issue below:
+
+
+
+
+
 1) arch/alpha/kernel/ptrace.c caused error afterwards:
-    stderr: "b"patch: **** Can't rename file arch/alpha/kernel/ptrace.c.ohBGgHS to arch/alpha/kernel/ptrace.c : Too many open files\n"". in folder: error2
-    
+```
+EXPORT_SYMBOL_GPL(irq_bypass_unregister_consumer);
++/* krepair validation hint */
+--- a/include/generated/autoconf.h
++++ b/include/generated/autoconf.h
+@@ -1677,3 +1677,4 @@
+ #define CONFIG_DEBUG_FS_ALLOW_ALL 1
+ #define CONFIG_HAVE_SAMPLE_FTRACE_DIRECT_MULTI 1
+ #define CONFIG_MEMFD_CREATE 1
++/* krepair validation hint */
+ERROR: Failed to apply the validation patch, retcode: 2, stdout: "b'patching file arch/alpha/boot/bootp.c\npatching file arch/alpha/boot/bootpz.c\npatching file arch/alpha/boot/main.c\npatching file arch/alpha/boot/misc.c\npatching file arch/alpha/boot/stdio.c\npatching file arch/alpha/boot/tools/mkbb.c\npatching file arch/alpha/boot/tools/objstrip.c\npatching file arch/alpha/kernel/asm-offsets.c\npatching file arch/alpha/kernel/audit.c\npatching file arch/alpha/kernel/bugs.c\npatching file arch/alpha/kernel/console.c\npatching file arch/alpha/kernel/core_cia.c\npatching file arch/alpha/kernel/core_irongate.c\npatching file arch/alpha/kernel/core_marvel.c\npatching file arch/alpha/kernel/core_mcpcia.c\npatching file arch/alpha/kernel/core_polaris.c\npatching file arch/alpha/kernel/core_t2.c\npatching file arch/alpha/kernel/core_titan.c\npatching file arch/alpha/kernel/core_tsunami.c\npatching file arch/alpha/kernel/core_wildfire.c\npatching file arch/alpha/kernel/err_common.c\npatching file arch/alpha/kernel/err_ev6.c\npatching file arch/alpha/kernel/err_ev7.c\npatching file arch/alpha/kernel/err_marvel.c\npatching file arch/alpha/kernel/err_titan.c\npatching file arch/alpha/kernel/es1888.c\npatching file arch/alpha/kernel/gct.c\npatching file arch/alpha/kernel/io.c\npatching file arch/alpha/kernel/irq_alpha.c\npatching file arch/alpha/kernel/irq.c\npatching file arch/alpha/kernel/irq_i8259.c\npatching file arch/alpha/kernel/irq_pyxis.c\npatching file arch/alpha/kernel/irq_srm.c\npatching file arch/alpha/kernel/module.c\npatching file arch/alpha/kernel/osf_sys.c\npatching file arch/alpha/kernel/pc873xx.c\npatching file arch/alpha/kernel/pci.c\npatching file arch/alpha/kernel/pci_iommu.c\npatching file arch/alpha/kernel/pci-sysfs.c\npatching file arch/alpha/kernel/perf_event.c\npatching file arch/alpha/kernel/process.c\npatching file arch/alpha/kernel/ptrace.c\n'", stderr: "b"patch: **** Can't rename file arch/alpha/kernel/ptrace.c.ohBGgHS to arch/alpha/kernel/ptrace.c : Too many open files\n"".
+
+Error in: KOVERAGE_EXITCODE_VALIDATION_PATCH_FAILED
+```
 
 
 When I omitted the lines before init/main.c, the output was a json file, but when I included all the lines, there were not happening any errors but output file was not present
 
 
-
-
-diff -ruN drivers/net/ethernet/i825xx/sni_82596.c
-
-
-koverage -f --linux-ksrc /home/eshgin/Desktop/koverage_task/linux --config /home/eshgin/Desktop/koverage_task/linux/.config --arch x86_64 --check-patch fw_all_diff_patch.diff -o /home/eshgin/Desktop/koverage_task/coverage_results_all_task_working.json 2>&1 | tee all_working_logs.log
 
 
